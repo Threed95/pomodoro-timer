@@ -18,7 +18,7 @@ function updateTimer() {
     if (timeLeft === 0) {
         clearInterval(timerId);
         timerOn = false;
-        switchTime();
+        switchTimer();
     } else {
         timeLeft--;
     }
@@ -61,7 +61,7 @@ function startStopTime() {
 }
 
 
-function switchTime(mode) {
+function switchTimer(mode) {
     switch (mode) {
         case "pomodoro":
             timeLeft = 25 * 60;
@@ -92,7 +92,7 @@ buttonReset.addEventListener("click", () => {
 })
 
 buttonBreak.addEventListener("click", () => {
-    switchTime("break");
+    switchTimer("break");
     pomodoroButton.classList.remove('active');
     buttonBreak.classList.add('active');
     startStopTime();
@@ -100,7 +100,7 @@ buttonBreak.addEventListener("click", () => {
 })
 
 pomodoroButton.addEventListener("click", () => {
-    switchTime("pomodoro");
+    switchTimer("pomodoro");
     pomodoroButton.classList.add('active');
     buttonBreak.classList.remove('active');
     startStopTime();
