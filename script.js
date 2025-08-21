@@ -61,14 +61,6 @@ function startStopTime() {
 }
 
 
-function resetTime() {
-    clearInterval(timerId);
-    timerOn = false;
-    buttonStart.textContent = "start";
-    timeLeft = isBreak ? 25 * 60 : 5 * 60;
-    updateTimer()
-}
-
 function switchTime(mode) {
     switch (mode) {
         case "pomodoro":
@@ -78,6 +70,14 @@ function switchTime(mode) {
             timeLeft = 5 * 60;
             break;
     }
+    updateTimer()
+}
+
+function resetTime() {
+    clearInterval(timerId);
+    timerOn = false;
+    buttonStart.textContent = "start";
+    timeLeft = isBreak ? 25 * 60 : 5 * 60;
     updateTimer()
 }
 
