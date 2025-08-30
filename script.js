@@ -14,14 +14,6 @@ function updateTimer() {
     const minutes = Math.floor(timeLeft / 60);
     const formatSeconds = timeLeft % 60;
     pomodoroTimer.textContent = `${String(minutes).padStart(2, '0')}:${String(formatSeconds).padStart(2, '0')}`;
-
-    if (timeLeft === 0) {
-        clearInterval(timerId);
-        timerOn = false;
-        switchTimer();
-    } else {
-        timeLeft--;
-    }
 }
 
 
@@ -30,38 +22,25 @@ function startTimer() {
     buttonStart.textContent = "stop";
     timerId = setInterval(() => {
         timeLeft--;
-        updateDisplay();
+        updateTimer();
         if (timeLeft === 0) {
-            resetTime();
+            const mode = isBreak ? "break" : "pomodoro";
+            stopTimer(mode);
         }
-        if (isBreak) {
-            timeLeft = 5 * 60;
-            isBreak = false;
-        } else {
-            timeLeft = 25 * 60;
-            isBreak = true;
-        }
-        updateDisplay();
-        if (timerOn) {
-            startTimer();
-        }
-    }, 100);
+    }, 10);
 }
 
 function startStopTime() {
     if (!timerOn) {
-        timerId = setInterval(updateTimer, 100);
+        startTimer();
         timerOn = true;
         buttonStart.textContent = "stop";
     } else {
-        clearInterval(timerId);
-        timerOn = false;
-        buttonStart.textContent = "start";
+        stopTimer();
     }
 }
 
-
-function switchTimer(mode) {
+function stopTimer(mode) {
     switch (mode) {
         case "pomodoro":
             timeLeft = 25 * 60;
@@ -70,41 +49,33 @@ function switchTimer(mode) {
             timeLeft = 5 * 60;
             break;
     }
-    updateTimer()
-}
-
-function resetTime() {
+    updateTimer();
     clearInterval(timerId);
     timerOn = false;
     buttonStart.textContent = "start";
-    timeLeft = isBreak ? 25 * 60 : 5 * 60;
-    updateTimer()
 }
+
 
 
 buttonStart.addEventListener("click", startStopTime);
 
 
 buttonReset.addEventListener("click", () => {
-    resetTime();
-    updateTimer();
-
+    const mode = isBreak ? "break" : "pomodoro";
+    stopTimer(mode);
 })
 
+
 buttonBreak.addEventListener("click", () => {
-    switchTimer("break");
+    stopTimer("break");
     pomodoroButton.classList.remove('active');
     buttonBreak.classList.add('active');
-    startStopTime();
-    updateTimer();
+    isBreak = true;
 })
 
 pomodoroButton.addEventListener("click", () => {
-    switchTimer("pomodoro");
+    stopTimer("pomodoro");
     pomodoroButton.classList.add('active');
     buttonBreak.classList.remove('active');
-    startStopTime();
-    updateTimer();
+    isBreak = false;
 })
-
-updateTimer();
