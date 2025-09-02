@@ -1,7 +1,7 @@
 let timerId;
 let timeLeft = 25 * 60;
 let timerOn = false;
-let isBreak = true;
+let isBreak = false;
 
 
 const pomodoroTimer = document.querySelector("#pomodoro-time");
