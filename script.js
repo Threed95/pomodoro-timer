@@ -3,6 +3,7 @@ let timeLeft = 25 * 60;
 let timerOn = false;
 let isBreak = true;
 
+
 const pomodoroTimer = document.querySelector("#pomodoro-time");
 const buttonStart = document.querySelector("#start");
 const buttonReset = document.querySelector("#reset");
@@ -15,7 +16,6 @@ function updateTimer() {
     const formatSeconds = timeLeft % 60;
     pomodoroTimer.textContent = `${String(minutes).padStart(2, '0')}:${String(formatSeconds).padStart(2, '0')}`;
 }
-
 
 function startTimer() {
     timerOn = true;
@@ -56,15 +56,12 @@ function stopTimer(mode) {
 }
 
 
-
 buttonStart.addEventListener("click", startStopTime);
-
 
 buttonReset.addEventListener("click", () => {
     const mode = isBreak ? "break" : "pomodoro";
     stopTimer(mode);
 })
-
 
 buttonBreak.addEventListener("click", () => {
     stopTimer("break");
@@ -72,6 +69,7 @@ buttonBreak.addEventListener("click", () => {
     buttonBreak.classList.add('active');
     isBreak = true;
 })
+
 
 pomodoroButton.addEventListener("click", () => {
     stopTimer("pomodoro");
